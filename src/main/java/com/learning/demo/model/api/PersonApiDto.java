@@ -1,6 +1,5 @@
 package com.learning.demo.model.api;
 
-
 import jakarta.validation.constraints.NotNull;
 
 public class PersonApiDto {

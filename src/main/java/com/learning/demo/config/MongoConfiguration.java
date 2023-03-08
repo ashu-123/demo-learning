@@ -1,21 +1,21 @@
 package com.learning.demo.config;
 
-//import com.mongodb.client.MongoClient;
-//import com.mongodb.client.MongoClients;
-
-import com.mongodb.reactivestreams.client.MongoClient;
-import com.mongodb.reactivestreams.client.MongoClients;
-import org.springframework.context.annotation.Bean;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractReactiveMongoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
+import static com.learning.demo.config.constant.ConfigConstants.ROOT_REPO_BASE_PACKAGE;
+
+/**
+ * The class which enables reactive mongo repositories and manages configurations leveraging
+ * the base class for reactive Spring Data MongoDB configuration using JavaConfig.
+ */
 @Configuration
-@EnableReactiveMongoRepositories(basePackages = "com.learning.demo.repository")
+@EnableReactiveMongoRepositories(basePackages = ROOT_REPO_BASE_PACKAGE)
 public class MongoConfiguration extends AbstractReactiveMongoConfiguration {
 
     @Override
-    protected String getDatabaseName() {
-        return "demo";
-    }
+    @NotNull
+    protected String getDatabaseName() { return "demo"; }
 }

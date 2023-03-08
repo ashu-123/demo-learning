@@ -1,17 +1,16 @@
 package com.learning.demo.repository;
 
-import com.learning.demo.model.entity.Person;
-import org.bson.types.ObjectId;
+import com.learning.demo.testdata.PersonTestData;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import reactor.test.StepVerifier;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static com.learning.demo.constant.PersonTestConstants.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DataMongoTest
-@SpringBootTest
+@SpringBootTest // Replace with DataMongoTest
 class PersonRepositoryTest {
 
     @Autowired
@@ -19,20 +18,16 @@ class PersonRepositoryTest {
 
     @Test
     void testSaveOperation() {
-        var objId = new ObjectId();
-        var person = new Person().setId(objId)
-                         .setFirstName("Ashutosh")
-                         .setLastName("Mishra");
+        var person = PersonTestData.getPerson();
         StepVerifier.create(personRepository.insert(person))
             .expectSubscription()
             .expectNextCount(1)
             .verifyComplete();
-        StepVerifier.create(personRepository.findById(objId))
+        StepVerifier.create(personRepository.findById(person.getId()))
             .expectSubscription()
             .consumeNextWith(c -> {
-                System.out.println("yes i am here");
-                assertAll(() -> assertEquals(c.getFirstName(), "Ashutosh"),
-                          () -> assertEquals(c.getLastName(), "Mishra"));
+                assertAll(() -> assertEquals(TEST_FIRST_NAME, c.getFirstName()),
+                    () -> assertEquals(TEST_LAST_NAME, c.getLastName()));
             })
             .verifyComplete();
     }
