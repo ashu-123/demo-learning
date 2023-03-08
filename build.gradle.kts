@@ -23,7 +23,7 @@ dependencies {
 	implementation("org.apache.kafka:kafka-streams")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 
-	testRuntimeOnly("de.flapdoodle.embed:de.flapdoodle.embed.mongo:1.35")
+//	testRuntimeOnly("de.flapdoodle.embed:de.flapdoodle.embed.mongo:1.35") // To be removed as soon as switched to test containers
 	testImplementation("org.testcontainers:mongodb:1.17.6")
 	testImplementation("org.testcontainers:junit-jupiter:1.17.6")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
