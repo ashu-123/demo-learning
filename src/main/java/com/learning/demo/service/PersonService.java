@@ -5,6 +5,7 @@ import com.learning.demo.mapper.PersonMapper;
 import com.learning.demo.model.api.PersonApiDto;
 import com.learning.demo.model.entity.Person;
 import com.learning.demo.repository.PersonRepository;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -18,6 +19,10 @@ public class PersonService {
     public PersonService(PersonRepository personRepository, PersonConfiguration personConfiguration) {
         this.personRepository = personRepository;
         this.personConfiguration = personConfiguration;
+    }
+
+    public Mono<Person> findPerson(String id) {
+        return personRepository.findById(new ObjectId(id));
     }
 
     public Mono<Person> createPerson(PersonApiDto personApiDto) {
