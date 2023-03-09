@@ -14,6 +14,10 @@ public class Person {
 
     private String lastName;
 
+    private String emailId;
+
+    private int age;
+
     public ObjectId getId() {
         return id;
     }
@@ -41,12 +45,32 @@ public class Person {
         return this;
     }
 
+    public String getEmailId() {
+        return emailId;
+    }
+
+    public Person setEmailId(String emailId) {
+        this.emailId = emailId;
+        return this;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public Person setAge(int age) {
+        this.age = age;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
                    "id=" + id +
                    ", firstName='" + firstName + '\'' +
                    ", lastName='" + lastName + '\'' +
+                   ", emailId='" + emailId + '\'' +
+                   ", age=" + age +
                    '}';
     }
 }

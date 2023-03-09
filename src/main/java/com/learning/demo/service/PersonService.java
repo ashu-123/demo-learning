@@ -1,5 +1,6 @@
 package com.learning.demo.service;
 
+import com.learning.demo.config.PersonConfiguration;
 import com.learning.demo.mapper.PersonMapper;
 import com.learning.demo.model.api.PersonApiDto;
 import com.learning.demo.model.entity.Person;
@@ -12,12 +13,17 @@ public class PersonService {
 
     private final PersonRepository personRepository;
 
-    public PersonService(PersonRepository personRepository) {
+    private final PersonConfiguration personConfiguration;
+
+    public PersonService(PersonRepository personRepository, PersonConfiguration personConfiguration) {
         this.personRepository = personRepository;
+        this.personConfiguration = personConfiguration;
     }
 
     public Mono<Person> createPerson(PersonApiDto personApiDto) {
         return Mono.just(personApiDto)
+                   .map(personDto -> personDto.setAge(personConfiguration.getAge()))
+                   .map(personDto -> personDto.setEmail(personConfiguration.getEmailId()))
                    .map(PersonMapper::toEntity)
                    .flatMap(personRepository::insert);
     }

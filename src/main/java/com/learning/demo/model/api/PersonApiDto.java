@@ -11,6 +11,10 @@ public class PersonApiDto {
 
     private String lastName;
 
+    private String email;
+
+    private int age;
+
     public String getId() {
         return id;
     }
@@ -38,12 +42,30 @@ public class PersonApiDto {
         return this;
     }
 
+    public String getEmail() { return email; }
+
+    public PersonApiDto setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public PersonApiDto setAge(int age) {
+        this.age = age;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "PersonApiDto{" +
                    "id='" + id + '\'' +
                    ", firstName='" + firstName + '\'' +
                    ", lastName='" + lastName + '\'' +
+                   ", email='" + email + '\'' +
+                   ", age=" + age +
                    '}';
     }
 }
