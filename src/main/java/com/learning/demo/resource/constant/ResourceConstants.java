@@ -11,6 +11,8 @@ public class ResourceConstants {
 
     private static final String SEPARATOR = "/";
     public static final String ROOT_PATH = SEPARATOR + "learning";
-
     public static final String CREATE_PERSON_PATH = SEPARATOR + "create-person";
+
+    private static final String ID_PATH = SEPARATOR + "{id}";
+    public static final String FIND_PERSON = SEPARATOR + "person" + ID_PATH;
 }
