@@ -9,9 +9,6 @@ import com.learning.demo.model.entity.Person;
 import com.learning.demo.model.springBeans.SingletonSpringBeanDto;
 import com.learning.demo.repository.PersonRepository;
 import org.bson.types.ObjectId;
-import org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebApplicationContext;
-import org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -46,7 +43,6 @@ public class PersonService {
 
     public Mono<Person> createPerson(PersonApiDto personApiDto) {
         return Mono.just(personApiDto)
-                   .filter(person -> applicationContextProvider.getApplicationContext() instanceof AnnotationConfigReactiveWebServerApplicationContext)
                    .doOnNext(person -> System.out.println(singletonSpringBeanDto))
                    .doOnNext(person -> System.out.println(prototypeSpringBeanDto))
                    .doOnNext(person -> System.out.println(applicationContextProvider.getApplicationContext().containsBean("baseResource")))
