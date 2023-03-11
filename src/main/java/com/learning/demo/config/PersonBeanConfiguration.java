@@ -4,6 +4,8 @@ import com.learning.demo.model.springBeans.PrototypeSpringBeanDto;
 import com.learning.demo.model.springBeans.RequestSpringBeanDto;
 import com.learning.demo.model.springBeans.SingletonSpringBeanDto;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,10 +21,12 @@ public class PersonBeanConfiguration {
 
     @Bean
     @Scope
+    @ConditionalOnProperty(value = "bean.singleton.enabled", havingValue = "false")
     public SingletonSpringBeanDto getSingletonSpringBeanDto() { return new SingletonSpringBeanDto(); }
 
     @Bean
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    @ConditionalOnWebApplication
     public PrototypeSpringBeanDto getPrototypeSpringBeanDto() { return new PrototypeSpringBeanDto(); }
 
     @Bean
