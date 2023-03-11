@@ -2,6 +2,9 @@ package com.learning.demo.resource;
 
 import com.learning.demo.mapper.PersonMapper;
 import com.learning.demo.model.api.PersonApiDto;
+import com.learning.demo.model.springBeans.PrototypeSpringBeanDto;
+import com.learning.demo.model.springBeans.RequestSpringBeanDto;
+import com.learning.demo.model.springBeans.SingletonSpringBeanDto;
 import com.learning.demo.service.PersonService;
 import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
@@ -19,8 +22,16 @@ public class BaseResource {
 
     private final PersonService personService;
 
-    public BaseResource(PersonService personService) {
+    private final SingletonSpringBeanDto singletonSpringBeanDto;
+
+    private final PrototypeSpringBeanDto prototypeSpringBeanDto;
+
+    public BaseResource(PersonService personService,
+                        SingletonSpringBeanDto singletonSpringBeanDto,
+                        PrototypeSpringBeanDto prototypeSpringBeanDto) {
         this.personService = personService;
+        this.singletonSpringBeanDto = singletonSpringBeanDto;
+        this.prototypeSpringBeanDto = prototypeSpringBeanDto;
     }
 
     @GetMapping(FIND_PERSON)
@@ -34,6 +45,8 @@ public class BaseResource {
     @ResponseStatus(CREATED)
     public Mono<PersonApiDto> createPerson(@RequestBody @Valid PersonApiDto personApiDto) {
         return personService.createPerson(personApiDto)
+                   .doOnNext(person -> System.out.println(singletonSpringBeanDto))
+                   .doOnNext(person -> System.out.println(prototypeSpringBeanDto))
                    .map(PersonMapper::toDto);
     }
 }
