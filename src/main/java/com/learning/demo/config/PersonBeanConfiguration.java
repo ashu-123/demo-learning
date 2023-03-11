@@ -1,13 +1,15 @@
 package com.learning.demo.config;
 
+import com.learning.demo.config.condition.DemoCondition;
 import com.learning.demo.model.springBeans.PrototypeSpringBeanDto;
 import com.learning.demo.model.springBeans.RequestSpringBeanDto;
 import com.learning.demo.model.springBeans.SingletonSpringBeanDto;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.context.annotation.RequestScope;
@@ -26,7 +28,9 @@ public class PersonBeanConfiguration {
 
     @Bean
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    @ConditionalOnWebApplication
+    @Conditional(DemoCondition.class)
+    @ConditionalOnProperty(value = "bean.other", havingValue = "true")
+    @ConditionalOnMissingBean(RequestSpringBeanDto.class)
     public PrototypeSpringBeanDto getPrototypeSpringBeanDto() { return new PrototypeSpringBeanDto(); }
 
     @Bean
