@@ -1,9 +1,12 @@
 package com.learning.demo.resource;
 
+import com.learning.demo.service.PersonService;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static com.learning.demo.resource.constant.ResourceConstants.ROOT_PATH;
@@ -14,6 +17,9 @@ class BaseResourceTest {
 
     @Autowired
     private WebTestClient webTestClient;
+
+    @MockBean
+    private PersonService personService;
 
     @Test
     void whenGetName_thenSuccessful() {
